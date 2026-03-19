@@ -1,59 +1,43 @@
 <template>
-  <div>
-    <UColorModeButton />
-    <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark px-0 py-3 navbar-bordered">
-      <div class="container-xl">
-        <!-- Logo -->
-        <NuxtLink to="/" class="navbar-brand">
-          <!-- <img src="/assets/topupin-logo.png" class="logo" alt="Logo" /> -->
-        </NuxtLink>
-        
-        <!-- Navbar toggle -->
-        <button
-          class="navbar-toggler custom-toggler"
-          type="button"
-          @click="toggleMenu"
-          aria-controls="navbarCollapse"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        
-        <!-- Collapse -->
-        <div 
-          class="collapse navbar-collapse" 
-          :class="{ 'show': isMenuOpen }" 
-          id="navbarCollapse"
-        >
-          <!-- Nav -->
-          <div class="navbar-nav mx-lg-auto">
-            <NuxtLink
-              to="/"
-              class="nav-item nav-link anim-border-bottom"
-              active-class="active"
-              exact
-              @click="closeMenu"
-            >Home</NuxtLink>
-  
-            <NuxtLink
-              to="/Projects"
-              class="nav-item nav-link anim-border-bottom"
-              active-class="active"
-              @click="closeMenu"
-            >Projects</NuxtLink>
-  
-            <NuxtLink
-              to="/Contact"
-              class="nav-item nav-link anim-border-bottom"
-              active-class="active"
-              @click="closeMenu"
-            >Contact</NuxtLink>
+  <nav class="sticky top-0 z-50 bg-slate-900/90 backdrop-blur-md border-b border-green-500/50 shadow-lg shadow-black/20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        <div class="flex-shrink-0 flex items-center">
+          <NuxtLink to="/" class="text-2xl font-bold text-white tracking-widest hover:text-green-400 transition-colors">
+            PORT
+            <span class="text-green-500">.</span>
+          </NuxtLink>
+        </div>
+        <div class="hidden md:block">
+          <div class="ml-10 flex items-baseline space-x-8">
+            <NuxtLink to="/" class="nav-link" active-class="active" exact>Home</NuxtLink>
+            <NuxtLink to="/Projects" class="nav-link" active-class="active">Projects</NuxtLink>
+            <NuxtLink to="/Contact" class="nav-link" active-class="active">Contact</NuxtLink>
+            <NuxtLink to="/articles" class="nav-link" active-class="active">Articles</NuxtLink>
           </div>
         </div>
+        <div class="-mr-2 flex md:hidden">
+          <button @click="toggleMenu" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-green-500 hover:text-white hover:bg-slate-800/50 focus:outline-none transition-colors">
+            <span class="sr-only">Open main menu</span>
+            <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" v-if="!isMenuOpen">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+            <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true" v-else>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
       </div>
-    </nav>
-  </div>
+    </div>
+    <div class="md:hidden transition-all duration-300 ease-in-out" :class="isMenuOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0 overflow-hidden'">
+      <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-slate-900 border-t border-slate-800">
+        <NuxtLink to="/" class="mobile-nav-link" active-class="mobile-active" exact @click="closeMenu">Home</NuxtLink>
+        <NuxtLink to="/Projects" class="mobile-nav-link" active-class="mobile-active" @click="closeMenu">Projects</NuxtLink>
+        <NuxtLink to="/Contact" class="mobile-nav-link" active-class="mobile-active" @click="closeMenu">Contact</NuxtLink>
+        <NuxtLink to="/articles" class="mobile-nav-link" active-class="mobile-active" @click="closeMenu">Articles</NuxtLink>
+      </div>
+    </div>
+  </nav>
 </template>
 
 <script>
@@ -71,141 +55,28 @@ export default {
     closeMenu() {
       this.isMenuOpen = false
     }
-  },
-  mounted() {
-    // Close menu when clicking outside
-    document.addEventListener('click', (e) => {
-      const navbar = document.getElementById('navbarCollapse')
-      const toggler = document.querySelector('.navbar-toggler')
-      if (this.isMenuOpen && navbar && !navbar.contains(e.target) && !toggler.contains(e.target)) {
-        this.isMenuOpen = false
-      }
-    })
-  },
-  beforeDestroy() {
-    // Clean up event listener
-    document.removeEventListener('click', this.closeMenu)
   }
 }
 </script>
 
 <style scoped>
-.navbar-dark.bg-dark {
-  background-color: #0f172a !important;
-}
-
-.navbar-bordered {
-  border-bottom: 2px solid #01c879;
-}
-
-.logo {
-  width: 100px;
-  height: auto;
-  margin: 0;
-  padding: 0;
-}
-
 .nav-link {
-  font-weight: 600;
-  margin-right: 20px;
-  position: relative;
-  padding: 0.5rem 1rem;
-  color: rgba(255, 255, 255, 0.85) !important;
-  transition: color 0.2s ease-out, transform 0.2s ease-out; /* Added transform to transition */
+  @apply text-slate-300 hover:text-white px-1 py-2 text-[15px] font-medium transition-colors relative tracking-wide;
 }
-
-.nav-link:hover {
-  color: #ffffff !important;
-  transform: scale(1.05); /* Slight scale effect on hover */
+.nav-link::after {
+  content: '';
+  @apply absolute left-0 -bottom-2 w-full h-[2px] bg-green-500 scale-x-0 transition-transform duration-300 origin-left shadow-[0_0_10px_rgba(34,197,94,0.5)];
 }
-
-.anim-border-bottom {
-  position: relative;
-  overflow: hidden;
+.nav-link:hover::after, .active::after {
+  @apply scale-x-100;
 }
-
-.anim-border-bottom::after {
-  content: "";
-  position: absolute;
-  width: 100%;
-  height: 2px;
-  bottom: 0;
-  left: 0;
-  background-color: #01c879;
-  transform: scaleX(0);
-  transform-origin: bottom left;
-  transition: transform 0.2s ease-out;
-}
-
-.anim-border-bottom:hover::after {
-  transform: scaleX(1);
-}
-
-/* Active state */
 .active {
-  border-bottom: 2px solid #01c879;
-  transition: border-bottom-color 0.2s ease-out; /* Smooth transition for active state */
+  @apply text-white;
 }
-
-/* Custom toggler styling */
-.custom-toggler {
-  border: 1px solid #01c879 !important;
-  padding: 0.25rem 0.5rem;
-  transition: background-color 0.2s ease-out; /* Smooth background color transition */
+.mobile-nav-link {
+  @apply text-slate-300 hover:bg-slate-800/50 hover:text-white block px-4 py-3 rounded-md text-base font-medium transition-colors text-center;
 }
-
-.custom-toggler:hover {
-  background-color: rgba(1, 200, 121, 0.1); /* Background on hover */
-}
-
-/* Mobile Styles */
-@media (max-width: 991.98px) {
-  .navbar-collapse {
-    background-color: #0f172a;
-    padding: 1rem;
-    margin: 0 -1rem;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-    transition: height 0.3s ease-in-out;
-  }
-
-  .navbar-collapse.show {
-    display: block !important;
-  }
-
-  .navbar-nav {
-    padding: 0.5rem 0;
-  }
-
-  .nav-item {
-    margin: 0.5rem 0;
-    text-align: center;
-  }
-
-  .nav-link {
-    margin-right: 0;
-    padding: 0.75rem 1rem;
-    display: block;
-    width: 100%;
-  }
-
-  .logo {
-    width: 90px;
-  }
-}
-
-/* Small mobile devices */
-@media (max-width: 767px) {
-  .navbar-dark .navbar-nav .nav-link {
-    font-size: 16px;
-  }
-
-  .container-xl {
-    padding-left: 1rem;
-    padding-right: 1rem;
-  }
+.mobile-active {
+  @apply bg-slate-800/80 text-green-400 border-l-4 border-green-500;
 }
 </style>

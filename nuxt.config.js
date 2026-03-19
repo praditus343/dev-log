@@ -14,17 +14,10 @@ export default {
       { hid: 'description', name: 'description', content: '' }
     ],
     link: [
-      { rel: 'stylesheet', href: 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css' },
-      { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css' },
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ],
     
-    script: [
-      { src: 'https://code.jquery.com/jquery-3.5.1.slim.min.js' },
-      { src: 'https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js', body: true },
-      { src: 'https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js' },
-      { src: 'https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js' }
-    ]
+    script: []
     
   },
 
@@ -45,7 +38,7 @@ export default {
   buildModules: [],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: ['@vercel/analytics'],
+  modules: [],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
