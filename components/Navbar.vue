@@ -12,8 +12,8 @@
           <div class="ml-10 flex items-baseline space-x-8">
             <NuxtLink to="/" class="nav-link" active-class="active" exact>Home</NuxtLink>
             <NuxtLink to="/Projects" class="nav-link" active-class="active">Projects</NuxtLink>
-            <NuxtLink to="/Contact" class="nav-link" active-class="active">Contact</NuxtLink>
             <NuxtLink to="/articles" class="nav-link" active-class="active">Articles</NuxtLink>
+            <NuxtLink to="/Contact" class="nav-link" active-class="active">Contact</NuxtLink>
           </div>
         </div>
         <div class="-mr-2 flex md:hidden">
