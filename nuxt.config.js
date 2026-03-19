@@ -43,7 +43,11 @@ export default {
   supabase: {
     url: process.env.SUPABASE_URL,
     key: process.env.SUPABASE_KEY,
-    redirect: false
+    redirectOptions: {
+      login: '/admin/login',
+      callback: '/confirm',
+      exclude: ['/*']
+    }
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
