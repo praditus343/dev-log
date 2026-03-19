@@ -40,6 +40,16 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: ['@vercel/analytics', '@nuxtjs/supabase', '@nuxtjs/tailwindcss'],
 
+  supabase: {
+    url: process.env.SUPABASE_URL,
+    key: process.env.SUPABASE_KEY,
+    redirectOptions: {
+      login: '/admin/login',
+      callback: '/confirm',
+      exclude: ['/*']
+    }
+  },
+
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
     transpile: []
