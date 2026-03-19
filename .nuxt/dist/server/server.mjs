@@ -1,1 +1,0 @@
-export { default } from "file:///run/media/danuarta/New%20Volume/3.%20PROYEK/1.%20Repo%20Git/Responsi-PWeb/node_modules/@nuxt/vite-builder/dist/runtime/vite-node.mjs"
