@@ -83,16 +83,31 @@
                 <input v-model="form.tags" type="text" class="form-input text-sm" placeholder="vue, nuxt, javascript"/>
               </div>
 
-              <!-- Publish toggle -->
+              <!-- Status Choice -->
               <div class="pt-3 border-t border-slate-700">
-                <label class="flex items-center gap-3 cursor-pointer">
-                  <div class="relative flex-shrink-0">
-                    <input type="checkbox" v-model="form.publishNow" class="sr-only"/>
-                    <div class="w-10 h-6 rounded-full transition-colors" :class="form.publishNow ? 'bg-green-500' : 'bg-slate-700'"></div>
-                    <div class="absolute left-1 top-1 w-4 h-4 rounded-full bg-white transition-transform" :class="form.publishNow ? 'translate-x-4' : 'translate-x-0'"></div>
-                  </div>
-                  <span class="text-slate-300 text-sm font-medium">Publish immediately</span>
-                </label>
+                <label class="form-label block mb-2">Status</label>
+                <div class="flex gap-2">
+                  <button type="button"
+                    @click="form.status = 'draft'"
+                    :class="form.status === 'draft'
+                      ? 'bg-slate-600 text-white border-slate-500'
+                      : 'bg-slate-800 text-slate-400 border-slate-700 hover:border-slate-500'"
+                    class="flex-1 py-2 text-xs font-semibold rounded-lg border transition-all flex items-center justify-center gap-1.5">
+                    <i class="fas fa-file-alt"></i> Draft
+                  </button>
+                  <button type="button"
+                    @click="form.status = 'published'"
+                    :class="form.status === 'published'
+                      ? 'bg-green-500 text-white border-green-500 shadow-md shadow-green-500/20'
+                      : 'bg-slate-800 text-slate-400 border-slate-700 hover:border-green-500/50'"
+                    class="flex-1 py-2 text-xs font-semibold rounded-lg border transition-all flex items-center justify-center gap-1.5">
+                    <i class="fas fa-globe"></i> Publish
+                  </button>
+                </div>
+                <p class="text-xs text-slate-500 mt-2">
+                  <span v-if="form.status === 'draft'"><i class="fas fa-info-circle mr-1"></i>Artikel tidak akan tampil di halaman publik.</span>
+                  <span v-else class="text-green-400"><i class="fas fa-check-circle mr-1"></i>Artikel akan langsung tampil ke publik.</span>
+                </p>
               </div>
 
             </div>
@@ -102,8 +117,8 @@
             </div>
 
             <button type="submit" :disabled="saving" class="w-full mt-4 btn-save py-3 justify-center">
-              <i :class="saving ? 'fas fa-spinner fa-spin' : 'fas fa-paper-plane'" class="mr-2"></i>
-              {{ saving ? 'Saving…' : 'Save Article' }}
+              <i :class="saving ? 'fas fa-spinner fa-spin' : (form.status === 'published' ? 'fas fa-globe' : 'fas fa-save')" class="mr-2"></i>
+              {{ saving ? 'Saving…' : (form.status === 'published' ? 'Publish Article' : 'Save as Draft') }}
             </button>
           </div>
 
@@ -130,7 +145,7 @@ const form = ref({
   excerpt: '',
   tags: '',
   cover_image: '',
-  publishNow: true
+  status: 'draft'
 })
 
 const generateSlug = () => {
@@ -171,7 +186,8 @@ const saveArticle = async () => {
       excerpt: form.value.excerpt || null,
       cover_image: form.value.cover_image || null,
       tags: tagsArray,
-      published_at: form.value.publishNow ? new Date().toISOString() : null
+      status: form.value.status,
+      published_at: form.value.status === 'published' ? new Date().toISOString() : null
     }
     const { error } = await supabase.from('articles').insert(payload)
     if (error) {

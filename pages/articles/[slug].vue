@@ -67,6 +67,7 @@ const { data: article, pending, error } = await useAsyncData(`article-${slug}`, 
     .from('articles')
     .select('*')
     .eq('slug', slug)
+    .eq('status', 'published')
     .single();
     
   if (error) {

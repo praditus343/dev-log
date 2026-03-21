@@ -85,7 +85,8 @@ const { data: articles, pending, error } = await useAsyncData('articles', async 
   const { data, error } = await supabase
     .from('articles')
     .select('id, title, slug, content, excerpt, cover_image, created_at, published_at')
-    .order('created_at', { ascending: false });
+    .eq('status', 'published')
+    .order('published_at', { ascending: false });
     
   if (error) throw error;
   return data || [];

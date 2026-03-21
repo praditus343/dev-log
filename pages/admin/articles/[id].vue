@@ -87,6 +87,48 @@
                 <input v-model="tagsInput" type="text" class="form-input text-sm" placeholder="vue, nuxt, javascript"/>
               </div>
 
+              <div class="pt-3 border-t border-slate-700">
+                <label class="form-label block mb-2">Status Artikel</label>
+                <div class="flex flex-col gap-2">
+                  <button type="button"
+                    @click="form.status = 'draft'"
+                    :class="form.status === 'draft'
+                      ? 'bg-slate-600 text-white border-slate-500 ring-2 ring-slate-500/30'
+                      : 'bg-slate-800 text-slate-400 border-slate-700 hover:border-slate-500'"
+                    class="w-full py-2.5 px-3 text-xs font-semibold rounded-lg border transition-all flex items-center gap-2">
+                    <i class="fas fa-file-alt text-slate-400 w-4"></i>
+                    <div class="text-left">
+                      <div>Draft</div>
+                      <div class="text-slate-500 font-normal">Tidak tampil ke publik</div>
+                    </div>
+                  </button>
+                  <button type="button"
+                    @click="form.status = 'published'"
+                    :class="form.status === 'published'
+                      ? 'bg-green-500/10 text-green-400 border-green-500 ring-2 ring-green-500/20'
+                      : 'bg-slate-800 text-slate-400 border-slate-700 hover:border-green-500/50'"
+                    class="w-full py-2.5 px-3 text-xs font-semibold rounded-lg border transition-all flex items-center gap-2">
+                    <i class="fas fa-globe text-green-500 w-4"></i>
+                    <div class="text-left">
+                      <div>Published</div>
+                      <div class="text-slate-500 font-normal">Tampil ke publik</div>
+                    </div>
+                  </button>
+                  <button type="button"
+                    @click="form.status = 'archived'"
+                    :class="form.status === 'archived'
+                      ? 'bg-yellow-500/10 text-yellow-400 border-yellow-500 ring-2 ring-yellow-500/20'
+                      : 'bg-slate-800 text-slate-400 border-slate-700 hover:border-yellow-500/50'"
+                    class="w-full py-2.5 px-3 text-xs font-semibold rounded-lg border transition-all flex items-center gap-2">
+                    <i class="fas fa-archive text-yellow-500 w-4"></i>
+                    <div class="text-left">
+                      <div>Archived</div>
+                      <div class="text-slate-500 font-normal">Disembunyikan, tidak dihapus</div>
+                    </div>
+                  </button>
+                </div>
+              </div>
+
               <div class="pt-3 border-t border-slate-700 text-xs text-slate-500">
                 <i class="fas fa-calendar-alt mr-1"></i>
                 Created: {{ formatDate(form.created_at) }}
@@ -100,8 +142,9 @@
               {{ errorMsg }}
             </div>
 
-            <button type="submit" :disabled="saving" class="w-full mt-4 btn-save py-3 justify-center">
-              <i :class="saving ? 'fas fa-spinner fa-spin' : 'fas fa-save'" class="mr-2"></i>
+            <button type="submit" :disabled="saving" class="w-full mt-4 btn-save py-3 justify-center"
+              :class="form.status === 'archived' ? 'btn-archive' : form.status === 'draft' ? 'btn-draft' : ''">
+              <i :class="saving ? 'fas fa-spinner fa-spin' : (form.status === 'published' ? 'fas fa-globe' : form.status === 'archived' ? 'fas fa-archive' : 'fas fa-save')" class="mr-2"></i>
               {{ saving ? 'Saving…' : 'Update Article' }}
             </button>
           </div>
@@ -135,6 +178,7 @@ const form = ref({
   excerpt: '',
   cover_image: '',
   tags: [],
+  status: 'draft',
   created_at: null
 })
 
@@ -187,7 +231,11 @@ const updateArticle = async () => {
       content: form.value.content,
       excerpt: form.value.excerpt || null,
       cover_image: form.value.cover_image || null,
-      tags: tagsArray
+      tags: tagsArray,
+      status: form.value.status,
+      published_at: form.value.status === 'published'
+        ? (form.value.published_at || new Date().toISOString())
+        : null
     }
     const { error } = await supabase.from('articles').update(payload).eq('id', form.value.id)
     if (error) {
@@ -253,6 +301,14 @@ const updateArticle = async () => {
   transition: background 0.15s;
 }
 .btn-secondary:hover { background: #475569; color: white; }
+.btn-draft {
+  background: linear-gradient(to right, #475569, #334155) !important;
+  box-shadow: 0 4px 12px rgba(71,85,105,0.25) !important;
+}
+.btn-archive {
+  background: linear-gradient(to right, #d97706, #b45309) !important;
+  box-shadow: 0 4px 12px rgba(217,119,6,0.25) !important;
+}
 .animate-fade-in-up { animation: fadeInUp 0.4s ease-out forwards; }
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(16px); }
