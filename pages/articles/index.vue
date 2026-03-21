@@ -42,6 +42,14 @@
             data-aos="fade-up"
             :data-aos-delay="index * 100"
           >
+            <!-- Cover Image -->
+            <div v-if="article.cover_image" class="w-full h-48 overflow-hidden">
+              <img :src="article.cover_image" :alt="article.title" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+            </div>
+            <div v-else class="w-full h-48 bg-slate-700/50 flex items-center justify-center">
+              <i class="fas fa-newspaper text-4xl text-slate-600"></i>
+            </div>
+
             <!-- Content -->
             <div class="p-8 flex flex-col flex-grow">
                <div class="flex items-center gap-2 text-sm text-green-400 font-medium mb-4">
@@ -50,7 +58,7 @@
                </div>
               <h3 class="text-xl font-bold text-white mb-4 group-hover:text-green-400 transition-colors line-clamp-2">{{ article.title }}</h3>
               <p class="text-slate-400 text-sm leading-relaxed mb-6 line-clamp-3 flex-grow">
-                {{ getExcerpt(article.content) }}
+                {{ article.excerpt || getExcerpt(article.content) }}
               </p>
               
               <div class="flex items-center text-green-500 font-medium mt-auto group-hover:translate-x-2 transition-transform">
@@ -76,7 +84,7 @@ const supabase = useSupabaseClient();
 const { data: articles, pending, error } = await useAsyncData('articles', async () => {
   const { data, error } = await supabase
     .from('articles')
-    .select('id, title, slug, content, created_at, published_at')
+    .select('id, title, slug, content, excerpt, cover_image, created_at, published_at')
     .order('created_at', { ascending: false });
     
   if (error) throw error;
