@@ -1,7 +1,5 @@
 <template>
   <div>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <Navbar />
     <section class="projects">
       <div class="container">
@@ -56,8 +54,8 @@
                   </div>
                 </div>
                 <div class="card-body">
-                  <h5 class="card-title" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ project.title }}</h5>
-                  <p class="card-text" style="display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden;">
+                  <h5 class="card-title truncate">{{ project.title }}</h5>
+                  <p class="card-text line-clamp-3">
                     {{ project.description }}
                   </p>
                   <div class="project-links d-flex justify-content-between">
@@ -79,7 +77,7 @@
     <Footer />
 
     <!-- Modal -->
-    <div v-if="selectedProject" class="modal fade show" tabindex="-1" style="display: block; background: rgba(0,0,0,0.8);">
+    <div v-if="selectedProject" class="modal fade show" tabindex="-1" style="display: block;" :style="{ background: 'rgba(0,0,0,0.8)' }">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
@@ -127,6 +125,12 @@
 
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
+
+useHead({
+  link: [
+    { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css' }
+  ]
+})
 
 const supabase = useSupabaseClient()
 

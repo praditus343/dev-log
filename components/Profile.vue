@@ -1,6 +1,5 @@
 <template>
   <div class="bg-slate-900 text-slate-300 min-h-screen relative overflow-hidden">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     
     <div class="absolute top-20 -left-20 w-96 h-96 bg-green-500/10 rounded-full blur-[100px] pointer-events-none"></div>
     <div class="absolute bottom-20 right-0 w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-[120px] pointer-events-none"></div>
@@ -11,9 +10,9 @@
         <!-- About Section -->
         <div class="flex flex-col-reverse md:flex-row items-center gap-12 lg:gap-20">
           <div class="w-full md:w-1/2 space-y-6 text-center md:text-left" data-aos="fade-right">
-            <h2 class="text-3xl lg:text-5xl font-extrabold text-white tracking-tight">
+            <h1 class="text-3xl lg:text-5xl font-extrabold text-white tracking-tight">
               About <span class="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-600">Me</span>
-            </h2>
+            </h1>
             <div class="w-20 h-1 bg-green-500 mx-auto md:mx-0 rounded-full mb-6"></div>
             
             <div v-if="pendingContent" class="space-y-4 animate-pulse">
@@ -23,14 +22,14 @@
             </div>
             
             <div v-else class="space-y-4">
-              <p v-for="(paragraph, idx) in aboutMe" :key="idx" class="text-base leading-relaxed" :class="idx === 0 ? 'text-lg text-slate-300' : 'text-slate-400'" v-html="paragraph"></p>
+              <p v-for="(paragraph, idx) in aboutMe" :key="idx" class="text-base leading-relaxed" :class="idx === 0 ? 'text-lg text-slate-300' : 'text-slate-400'" v-html="sanitizeHtml(paragraph)"></p>
             </div>
             
             <div class="flex justify-center md:justify-start gap-6 pt-4">
-              <a :href="s.social_github" target="_blank" class="text-slate-400 hover:text-green-400 transition-transform hover:-translate-y-1 text-2xl"><i class="fab fa-github"></i></a>
-              <a :href="s.social_linkedin" target="_blank" class="text-slate-400 hover:text-green-400 transition-transform hover:-translate-y-1 text-2xl"><i class="fab fa-linkedin"></i></a>
-              <a :href="s.social_instagram" target="_blank" class="text-slate-400 hover:text-green-400 transition-transform hover:-translate-y-1 text-2xl"><i class="fab fa-instagram"></i></a>
-              <a :href="s.social_twitter" target="_blank" class="text-slate-400 hover:text-green-400 transition-transform hover:-translate-y-1 text-2xl"><i class="fab fa-twitter"></i></a>
+              <a :href="s.social_github" target="_blank" aria-label="GitHub" class="text-slate-400 hover:text-green-400 transition-transform hover:-translate-y-1 text-2xl"><i class="fab fa-github" aria-hidden="true"></i></a>
+              <a :href="s.social_linkedin" target="_blank" aria-label="LinkedIn" class="text-slate-400 hover:text-green-400 transition-transform hover:-translate-y-1 text-2xl"><i class="fab fa-linkedin" aria-hidden="true"></i></a>
+              <a :href="s.social_instagram" target="_blank" aria-label="Instagram" class="text-slate-400 hover:text-green-400 transition-transform hover:-translate-y-1 text-2xl"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+              <a :href="s.social_twitter" target="_blank" aria-label="Twitter" class="text-slate-400 hover:text-green-400 transition-transform hover:-translate-y-1 text-2xl"><i class="fab fa-twitter" aria-hidden="true"></i></a>
             </div>
             
             <div class="pt-6">
@@ -61,65 +60,14 @@
           </div>
           
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- Skill 1 -->
-            <div class="group bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 p-8 rounded-2xl hover:bg-slate-800 hover:border-green-500/30 transition-all duration-300 hover:shadow-[0_10px_30px_rgba(34,197,94,0.1)] hover:-translate-y-2 flex flex-col h-full">
-              <div class="w-16 h-16 rounded-2xl bg-slate-900 flex items-center justify-center text-3xl text-green-400 mb-6 group-hover:scale-110 group-hover:bg-green-500/10 transition-all">
-                <i class="fas fa-laptop-code"></i>
-              </div>
-              <h4 class="text-xl font-bold text-white mb-3">Web Development</h4>
-              <p class="text-slate-400 leading-relaxed mb-6 flex-grow">
-                Expert in modern web technologies including Vue.js, React, and Node.js. Focused on creating responsive and performant applications.
-              </p>
-              <div>
-                <div class="flex justify-between text-sm mb-2">
-                  <span class="text-slate-300 font-medium">Proficiency</span>
-                  <span class="text-green-400 font-bold">90%</span>
-                </div>
-                <div class="w-full bg-slate-900 rounded-full h-2.5">
-                  <div class="bg-gradient-to-r from-green-400 to-emerald-500 h-2.5 rounded-full" style="width: 90%"></div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Skill 2 -->
-            <div class="group bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 p-8 rounded-2xl hover:bg-slate-800 hover:border-green-500/30 transition-all duration-300 hover:shadow-[0_10px_30px_rgba(34,197,94,0.1)] hover:-translate-y-2 flex flex-col h-full">
-              <div class="w-16 h-16 rounded-2xl bg-slate-900 flex items-center justify-center text-3xl text-green-400 mb-6 group-hover:scale-110 group-hover:bg-green-500/10 transition-all">
-                <i class="fas fa-chart-line"></i>
-              </div>
-              <h4 class="text-xl font-bold text-white mb-3">Data Science</h4>
-              <p class="text-slate-400 leading-relaxed mb-6 flex-grow">
-                Proficient in data analysis, machine learning, and statistical modeling using Python, Pandas, and scikit-learn.
-              </p>
-              <div>
-                <div class="flex justify-between text-sm mb-2">
-                  <span class="text-slate-300 font-medium">Proficiency</span>
-                  <span class="text-green-400 font-bold">85%</span>
-                </div>
-                <div class="w-full bg-slate-900 rounded-full h-2.5">
-                  <div class="bg-gradient-to-r from-green-400 to-emerald-500 h-2.5 rounded-full" style="width: 85%"></div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Skill 3 -->
-            <div class="group bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 p-8 rounded-2xl hover:bg-slate-800 hover:border-green-500/30 transition-all duration-300 hover:shadow-[0_10px_30px_rgba(34,197,94,0.1)] hover:-translate-y-2 flex flex-col h-full">
-              <div class="w-16 h-16 rounded-2xl bg-slate-900 flex items-center justify-center text-3xl text-green-400 mb-6 group-hover:scale-110 group-hover:bg-green-500/10 transition-all">
-                <i class="fas fa-mobile-alt"></i>
-              </div>
-              <h4 class="text-xl font-bold text-white mb-3">Responsive Design</h4>
-              <p class="text-slate-400 leading-relaxed mb-6 flex-grow">
-                Skilled in creating adaptive layouts using modern CSS frameworks and best practices for optimal user experience across all devices.
-              </p>
-              <div>
-                <div class="flex justify-between text-sm mb-2">
-                  <span class="text-slate-300 font-medium">Proficiency</span>
-                  <span class="text-green-400 font-bold">88%</span>
-                </div>
-                <div class="w-full bg-slate-900 rounded-full h-2.5">
-                  <div class="bg-gradient-to-r from-green-400 to-emerald-500 h-2.5 rounded-full" style="width: 88%"></div>
-                </div>
-              </div>
-            </div>
+            <SkillCard
+              v-for="skill in skills"
+              :key="skill.title"
+              :icon="skill.icon"
+              :title="skill.title"
+              :description="skill.description"
+              :proficiency="skill.proficiency"
+            />
           </div>
         </div>
 
@@ -134,13 +82,13 @@
             </p>
             
             <div class="flex flex-col sm:flex-row justify-center items-center gap-6 relative z-10">
-              <a :href="'mailto:' + s.contact_email" class="flex items-center gap-3 text-slate-300 hover:text-green-400 transition-colors">
-                <div class="w-12 h-12 rounded-full bg-slate-700/50 flex items-center justify-center text-xl"><i class="fas fa-envelope"></i></div>
+              <a v-if="s.contact_email" :href="'mailto:' + s.contact_email" aria-label="Send email" class="flex items-center gap-3 text-slate-300 hover:text-green-400 transition-colors">
+                <div class="w-12 h-12 rounded-full bg-slate-700/50 flex items-center justify-center text-xl"><i class="fas fa-envelope" aria-hidden="true"></i></div>
                 <span class="font-medium text-lg">{{ s.contact_email }}</span>
               </a>
-              <div class="hidden sm:block w-px h-10 bg-slate-700"></div>
-              <a :href="'tel:' + s.contact_phone" class="flex items-center gap-3 text-slate-300 hover:text-green-400 transition-colors">
-                <div class="w-12 h-12 rounded-full bg-slate-700/50 flex items-center justify-center text-xl"><i class="fas fa-phone-alt"></i></div>
+              <div v-if="s.contact_email && s.contact_phone" class="hidden sm:block w-px h-10 bg-slate-700"></div>
+              <a v-if="s.contact_phone" :href="'tel:' + s.contact_phone" aria-label="Call phone" class="flex items-center gap-3 text-slate-300 hover:text-green-400 transition-colors">
+                <div class="w-12 h-12 rounded-full bg-slate-700/50 flex items-center justify-center text-xl"><i class="fas fa-phone-alt" aria-hidden="true"></i></div>
                 <span class="font-medium text-lg">{{ s.contact_phone }}</span>
               </a>
             </div>
@@ -154,10 +102,33 @@
 
 <script setup>
 import { ref, onMounted, computed } from 'vue';
+import { sanitizeHtml } from '~/utils/sanitize';
 
 const { getSettings } = useSiteSettings()
 
-const loading = ref(true)
+const pendingContent = ref(true)
+
+const skills = [
+  {
+    icon: 'fas fa-laptop-code',
+    title: 'Web Development',
+    description: 'Expert in modern web technologies including Vue.js, React, and Node.js. Focused on creating responsive and performant applications.',
+    proficiency: 90,
+  },
+  {
+    icon: 'fas fa-chart-line',
+    title: 'Data Science',
+    description: 'Proficient in data analysis, machine learning, and statistical modeling using Python, Pandas, and scikit-learn.',
+    proficiency: 85,
+  },
+  {
+    icon: 'fas fa-mobile-alt',
+    title: 'Responsive Design',
+    description: 'Skilled in creating adaptive layouts using modern CSS frameworks and best practices for optimal user experience across all devices.',
+    proficiency: 88,
+  },
+]
+
 const s = ref({
   profile_name: 'Egi Danuarta',
   profile_tagline: 'Web Developer & Data Science Enthusiast',
@@ -183,7 +154,7 @@ onMounted(async () => {
   } catch (err) {
     console.error('Failed to load site settings:', err)
   } finally {
-    loading.value = false
+    pendingContent.value = false
   }
 })
 </script>

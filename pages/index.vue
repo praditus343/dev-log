@@ -1,7 +1,9 @@
 <template>
   <div>
     <Navbar />
-    <Profile />
+    <main id="main-content">
+      <Profile />
+    </main>
     <Footer />
   </div>
 </template>
