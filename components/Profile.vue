@@ -60,65 +60,14 @@
           </div>
           
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- Skill 1 -->
-            <div class="group bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 p-8 rounded-2xl hover:bg-slate-800 hover:border-green-500/30 transition-all duration-300 hover:shadow-[0_10px_30px_rgba(34,197,94,0.1)] hover:-translate-y-2 flex flex-col h-full">
-              <div class="w-16 h-16 rounded-2xl bg-slate-900 flex items-center justify-center text-3xl text-green-400 mb-6 group-hover:scale-110 group-hover:bg-green-500/10 transition-all">
-                <i class="fas fa-laptop-code"></i>
-              </div>
-              <h3 class="text-xl font-bold text-white mb-3">Web Development</h3>
-              <p class="text-slate-400 leading-relaxed mb-6 flex-grow">
-                Expert in modern web technologies including Vue.js, React, and Node.js. Focused on creating responsive and performant applications.
-              </p>
-              <div>
-                <div class="flex justify-between text-sm mb-2">
-                  <span class="text-slate-300 font-medium">Proficiency</span>
-                  <span class="text-green-400 font-bold">90%</span>
-                </div>
-                <div class="w-full bg-slate-900 rounded-full h-2.5" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" aria-label="Web Development proficiency: 90%">
-                  <div class="bg-gradient-to-r from-green-400 to-emerald-500 h-2.5 rounded-full" style="width: 90%"></div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Skill 2 -->
-            <div class="group bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 p-8 rounded-2xl hover:bg-slate-800 hover:border-green-500/30 transition-all duration-300 hover:shadow-[0_10px_30px_rgba(34,197,94,0.1)] hover:-translate-y-2 flex flex-col h-full">
-              <div class="w-16 h-16 rounded-2xl bg-slate-900 flex items-center justify-center text-3xl text-green-400 mb-6 group-hover:scale-110 group-hover:bg-green-500/10 transition-all">
-                <i class="fas fa-chart-line"></i>
-              </div>
-              <h3 class="text-xl font-bold text-white mb-3">Data Science</h3>
-              <p class="text-slate-400 leading-relaxed mb-6 flex-grow">
-                Proficient in data analysis, machine learning, and statistical modeling using Python, Pandas, and scikit-learn.
-              </p>
-              <div>
-                <div class="flex justify-between text-sm mb-2">
-                  <span class="text-slate-300 font-medium">Proficiency</span>
-                  <span class="text-green-400 font-bold">85%</span>
-                </div>
-                <div class="w-full bg-slate-900 rounded-full h-2.5" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" aria-label="Data Science proficiency: 85%">
-                  <div class="bg-gradient-to-r from-green-400 to-emerald-500 h-2.5 rounded-full" style="width: 85%"></div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Skill 3 -->
-            <div class="group bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 p-8 rounded-2xl hover:bg-slate-800 hover:border-green-500/30 transition-all duration-300 hover:shadow-[0_10px_30px_rgba(34,197,94,0.1)] hover:-translate-y-2 flex flex-col h-full">
-              <div class="w-16 h-16 rounded-2xl bg-slate-900 flex items-center justify-center text-3xl text-green-400 mb-6 group-hover:scale-110 group-hover:bg-green-500/10 transition-all">
-                <i class="fas fa-mobile-alt"></i>
-              </div>
-              <h3 class="text-xl font-bold text-white mb-3">Responsive Design</h3>
-              <p class="text-slate-400 leading-relaxed mb-6 flex-grow">
-                Skilled in creating adaptive layouts using modern CSS frameworks and best practices for optimal user experience across all devices.
-              </p>
-              <div>
-                <div class="flex justify-between text-sm mb-2">
-                  <span class="text-slate-300 font-medium">Proficiency</span>
-                  <span class="text-green-400 font-bold">88%</span>
-                </div>
-                <div class="w-full bg-slate-900 rounded-full h-2.5" role="progressbar" aria-valuenow="88" aria-valuemin="0" aria-valuemax="100" aria-label="Responsive Design proficiency: 88%">
-                  <div class="bg-gradient-to-r from-green-400 to-emerald-500 h-2.5 rounded-full" style="width: 88%"></div>
-                </div>
-              </div>
-            </div>
+            <SkillCard
+              v-for="skill in skills"
+              :key="skill.title"
+              :icon="skill.icon"
+              :title="skill.title"
+              :description="skill.description"
+              :proficiency="skill.proficiency"
+            />
           </div>
         </div>
 
@@ -158,6 +107,28 @@ import { sanitizeHtml } from '~/utils/sanitize';
 const { getSettings } = useSiteSettings()
 
 const pendingContent = ref(true)
+
+const skills = [
+  {
+    icon: 'fas fa-laptop-code',
+    title: 'Web Development',
+    description: 'Expert in modern web technologies including Vue.js, React, and Node.js. Focused on creating responsive and performant applications.',
+    proficiency: 90,
+  },
+  {
+    icon: 'fas fa-chart-line',
+    title: 'Data Science',
+    description: 'Proficient in data analysis, machine learning, and statistical modeling using Python, Pandas, and scikit-learn.',
+    proficiency: 85,
+  },
+  {
+    icon: 'fas fa-mobile-alt',
+    title: 'Responsive Design',
+    description: 'Skilled in creating adaptive layouts using modern CSS frameworks and best practices for optimal user experience across all devices.',
+    proficiency: 88,
+  },
+]
+
 const s = ref({
   profile_name: 'Egi Danuarta',
   profile_tagline: 'Web Developer & Data Science Enthusiast',
