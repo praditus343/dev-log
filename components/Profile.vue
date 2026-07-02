@@ -1,6 +1,5 @@
 <template>
   <div class="bg-slate-900 text-slate-300 min-h-screen relative overflow-hidden">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     
     <div class="absolute top-20 -left-20 w-96 h-96 bg-green-500/10 rounded-full blur-[100px] pointer-events-none"></div>
     <div class="absolute bottom-20 right-0 w-[500px] h-[500px] bg-blue-500/10 rounded-full blur-[120px] pointer-events-none"></div>
@@ -23,7 +22,7 @@
             </div>
             
             <div v-else class="space-y-4">
-              <p v-for="(paragraph, idx) in aboutMe" :key="idx" class="text-base leading-relaxed" :class="idx === 0 ? 'text-lg text-slate-300' : 'text-slate-400'" v-html="paragraph"></p>
+              <p v-for="(paragraph, idx) in aboutMe" :key="idx" class="text-base leading-relaxed" :class="idx === 0 ? 'text-lg text-slate-300' : 'text-slate-400'" v-html="sanitizeHtml(paragraph)"></p>
             </div>
             
             <div class="flex justify-center md:justify-start gap-6 pt-4">
@@ -154,10 +153,11 @@
 
 <script setup>
 import { ref, onMounted, computed } from 'vue';
+import { sanitizeHtml } from '~/utils/sanitize';
 
 const { getSettings } = useSiteSettings()
 
-const loading = ref(true)
+const pendingContent = ref(true)
 const s = ref({
   profile_name: 'Egi Danuarta',
   profile_tagline: 'Web Developer & Data Science Enthusiast',
@@ -183,7 +183,7 @@ onMounted(async () => {
   } catch (err) {
     console.error('Failed to load site settings:', err)
   } finally {
-    loading.value = false
+    pendingContent.value = false
   }
 })
 </script>

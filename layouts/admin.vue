@@ -1,6 +1,5 @@
 <template>
   <div class="min-h-screen bg-slate-900 text-slate-300 flex">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <!-- Admin Sidebar -->
     <aside class="w-64 bg-slate-800 border-r border-slate-700 hidden md:flex flex-col">
       <div class="p-6 border-b border-slate-700">

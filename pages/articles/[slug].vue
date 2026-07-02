@@ -1,6 +1,5 @@
 <template>
   <div class="bg-slate-900 text-slate-300 min-h-screen flex flex-col relative overflow-hidden">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <Navbar />
     
     <!-- Decorative Elements -->
@@ -47,7 +46,7 @@
         </div>
 
         <!-- Content -->
-        <div class="prose prose-invert prose-lg max-w-none prose-a:text-green-400 hover:prose-a:text-green-300 prose-img:rounded-2xl prose-headings:text-white prose-p:text-slate-300 animate-fade-in-up delay-100" v-html="article.content"></div>
+        <div class="prose prose-invert prose-lg max-w-none prose-a:text-green-400 hover:prose-a:text-green-300 prose-img:rounded-2xl prose-headings:text-white prose-p:text-slate-300 animate-fade-in-up delay-100" v-html="sanitizeHtml(article.content)"></div>      
       </article>
     </section>
     
@@ -57,6 +56,7 @@
 
 <script setup>
 import { useRoute } from 'vue-router';
+import { sanitizeHtml } from '~/utils/sanitize';
 
 const route = useRoute();
 const supabase = useSupabaseClient();

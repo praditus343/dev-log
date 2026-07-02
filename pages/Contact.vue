@@ -1,6 +1,5 @@
 <template>
   <div class="bg-slate-900 text-slate-300 min-h-screen flex flex-col relative overflow-hidden">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <Navbar />
     
     <!-- Decorative Elements -->
