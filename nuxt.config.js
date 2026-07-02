@@ -5,7 +5,7 @@ export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   app: {
     head: {
-      title: 'my-nuxt-portfolio',
+      title: 'portfolio-Egi Danuarta',
       htmlAttrs: {
         lang: 'en'
       },
