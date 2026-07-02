@@ -1,4 +1,7 @@
 <template>
+  <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:bg-green-500 focus:text-white focus:px-4 focus:py-2 focus:rounded-md focus:font-medium transition-all">
+    Skip to content
+  </a>
   <nav class="sticky top-0 z-50 bg-slate-900/90 backdrop-blur-md border-b border-green-500/50 shadow-lg shadow-black/20">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-20">

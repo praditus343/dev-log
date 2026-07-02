@@ -10,9 +10,9 @@
         <!-- About Section -->
         <div class="flex flex-col-reverse md:flex-row items-center gap-12 lg:gap-20">
           <div class="w-full md:w-1/2 space-y-6 text-center md:text-left" data-aos="fade-right">
-            <h2 class="text-3xl lg:text-5xl font-extrabold text-white tracking-tight">
+            <h1 class="text-3xl lg:text-5xl font-extrabold text-white tracking-tight">
               About <span class="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-600">Me</span>
-            </h2>
+            </h1>
             <div class="w-20 h-1 bg-green-500 mx-auto md:mx-0 rounded-full mb-6"></div>
             
             <div v-if="pendingContent" class="space-y-4 animate-pulse">
@@ -26,10 +26,10 @@
             </div>
             
             <div class="flex justify-center md:justify-start gap-6 pt-4">
-              <a :href="s.social_github" target="_blank" class="text-slate-400 hover:text-green-400 transition-transform hover:-translate-y-1 text-2xl"><i class="fab fa-github"></i></a>
-              <a :href="s.social_linkedin" target="_blank" class="text-slate-400 hover:text-green-400 transition-transform hover:-translate-y-1 text-2xl"><i class="fab fa-linkedin"></i></a>
-              <a :href="s.social_instagram" target="_blank" class="text-slate-400 hover:text-green-400 transition-transform hover:-translate-y-1 text-2xl"><i class="fab fa-instagram"></i></a>
-              <a :href="s.social_twitter" target="_blank" class="text-slate-400 hover:text-green-400 transition-transform hover:-translate-y-1 text-2xl"><i class="fab fa-twitter"></i></a>
+              <a :href="s.social_github" target="_blank" aria-label="GitHub" class="text-slate-400 hover:text-green-400 transition-transform hover:-translate-y-1 text-2xl"><i class="fab fa-github" aria-hidden="true"></i></a>
+              <a :href="s.social_linkedin" target="_blank" aria-label="LinkedIn" class="text-slate-400 hover:text-green-400 transition-transform hover:-translate-y-1 text-2xl"><i class="fab fa-linkedin" aria-hidden="true"></i></a>
+              <a :href="s.social_instagram" target="_blank" aria-label="Instagram" class="text-slate-400 hover:text-green-400 transition-transform hover:-translate-y-1 text-2xl"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+              <a :href="s.social_twitter" target="_blank" aria-label="Twitter" class="text-slate-400 hover:text-green-400 transition-transform hover:-translate-y-1 text-2xl"><i class="fab fa-twitter" aria-hidden="true"></i></a>
             </div>
             
             <div class="pt-6">
@@ -65,7 +65,7 @@
               <div class="w-16 h-16 rounded-2xl bg-slate-900 flex items-center justify-center text-3xl text-green-400 mb-6 group-hover:scale-110 group-hover:bg-green-500/10 transition-all">
                 <i class="fas fa-laptop-code"></i>
               </div>
-              <h4 class="text-xl font-bold text-white mb-3">Web Development</h4>
+              <h3 class="text-xl font-bold text-white mb-3">Web Development</h3>
               <p class="text-slate-400 leading-relaxed mb-6 flex-grow">
                 Expert in modern web technologies including Vue.js, React, and Node.js. Focused on creating responsive and performant applications.
               </p>
@@ -74,7 +74,7 @@
                   <span class="text-slate-300 font-medium">Proficiency</span>
                   <span class="text-green-400 font-bold">90%</span>
                 </div>
-                <div class="w-full bg-slate-900 rounded-full h-2.5">
+                <div class="w-full bg-slate-900 rounded-full h-2.5" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" aria-label="Web Development proficiency: 90%">
                   <div class="bg-gradient-to-r from-green-400 to-emerald-500 h-2.5 rounded-full" style="width: 90%"></div>
                 </div>
               </div>
@@ -85,7 +85,7 @@
               <div class="w-16 h-16 rounded-2xl bg-slate-900 flex items-center justify-center text-3xl text-green-400 mb-6 group-hover:scale-110 group-hover:bg-green-500/10 transition-all">
                 <i class="fas fa-chart-line"></i>
               </div>
-              <h4 class="text-xl font-bold text-white mb-3">Data Science</h4>
+              <h3 class="text-xl font-bold text-white mb-3">Data Science</h3>
               <p class="text-slate-400 leading-relaxed mb-6 flex-grow">
                 Proficient in data analysis, machine learning, and statistical modeling using Python, Pandas, and scikit-learn.
               </p>
@@ -94,7 +94,7 @@
                   <span class="text-slate-300 font-medium">Proficiency</span>
                   <span class="text-green-400 font-bold">85%</span>
                 </div>
-                <div class="w-full bg-slate-900 rounded-full h-2.5">
+                <div class="w-full bg-slate-900 rounded-full h-2.5" role="progressbar" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" aria-label="Data Science proficiency: 85%">
                   <div class="bg-gradient-to-r from-green-400 to-emerald-500 h-2.5 rounded-full" style="width: 85%"></div>
                 </div>
               </div>
@@ -105,7 +105,7 @@
               <div class="w-16 h-16 rounded-2xl bg-slate-900 flex items-center justify-center text-3xl text-green-400 mb-6 group-hover:scale-110 group-hover:bg-green-500/10 transition-all">
                 <i class="fas fa-mobile-alt"></i>
               </div>
-              <h4 class="text-xl font-bold text-white mb-3">Responsive Design</h4>
+              <h3 class="text-xl font-bold text-white mb-3">Responsive Design</h3>
               <p class="text-slate-400 leading-relaxed mb-6 flex-grow">
                 Skilled in creating adaptive layouts using modern CSS frameworks and best practices for optimal user experience across all devices.
               </p>
@@ -114,7 +114,7 @@
                   <span class="text-slate-300 font-medium">Proficiency</span>
                   <span class="text-green-400 font-bold">88%</span>
                 </div>
-                <div class="w-full bg-slate-900 rounded-full h-2.5">
+                <div class="w-full bg-slate-900 rounded-full h-2.5" role="progressbar" aria-valuenow="88" aria-valuemin="0" aria-valuemax="100" aria-label="Responsive Design proficiency: 88%">
                   <div class="bg-gradient-to-r from-green-400 to-emerald-500 h-2.5 rounded-full" style="width: 88%"></div>
                 </div>
               </div>
@@ -133,13 +133,13 @@
             </p>
             
             <div class="flex flex-col sm:flex-row justify-center items-center gap-6 relative z-10">
-              <a :href="'mailto:' + s.contact_email" class="flex items-center gap-3 text-slate-300 hover:text-green-400 transition-colors">
-                <div class="w-12 h-12 rounded-full bg-slate-700/50 flex items-center justify-center text-xl"><i class="fas fa-envelope"></i></div>
+              <a v-if="s.contact_email" :href="'mailto:' + s.contact_email" aria-label="Send email" class="flex items-center gap-3 text-slate-300 hover:text-green-400 transition-colors">
+                <div class="w-12 h-12 rounded-full bg-slate-700/50 flex items-center justify-center text-xl"><i class="fas fa-envelope" aria-hidden="true"></i></div>
                 <span class="font-medium text-lg">{{ s.contact_email }}</span>
               </a>
-              <div class="hidden sm:block w-px h-10 bg-slate-700"></div>
-              <a :href="'tel:' + s.contact_phone" class="flex items-center gap-3 text-slate-300 hover:text-green-400 transition-colors">
-                <div class="w-12 h-12 rounded-full bg-slate-700/50 flex items-center justify-center text-xl"><i class="fas fa-phone-alt"></i></div>
+              <div v-if="s.contact_email && s.contact_phone" class="hidden sm:block w-px h-10 bg-slate-700"></div>
+              <a v-if="s.contact_phone" :href="'tel:' + s.contact_phone" aria-label="Call phone" class="flex items-center gap-3 text-slate-300 hover:text-green-400 transition-colors">
+                <div class="w-12 h-12 rounded-full bg-slate-700/50 flex items-center justify-center text-xl"><i class="fas fa-phone-alt" aria-hidden="true"></i></div>
                 <span class="font-medium text-lg">{{ s.contact_phone }}</span>
               </a>
             </div>

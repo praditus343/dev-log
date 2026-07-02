@@ -31,14 +31,14 @@
         <div class="space-y-4">
           <h4 class="text-lg font-semibold text-white mb-4">Connect</h4>
           <div class="flex justify-center md:justify-start space-x-5">
-            <a href="https://github.com/praditus343" target="_blank" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-green-500 hover:text-white transition-all transform hover:-translate-y-1 shadow-lg">
-              <i class="fab fa-github"></i>
+            <a href="https://github.com/praditus343" target="_blank" aria-label="GitHub" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-green-500 hover:text-white transition-all transform hover:-translate-y-1 shadow-lg">
+              <i class="fab fa-github" aria-hidden="true"></i>
             </a>
-            <a href="https://www.linkedin.com/in/praditus-egi-danuarta/" target="_blank" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-green-500 hover:text-white transition-all transform hover:-translate-y-1 shadow-lg">
-              <i class="fab fa-linkedin-in"></i>
+            <a href="https://www.linkedin.com/in/praditus-egi-danuarta/" target="_blank" aria-label="LinkedIn" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-green-500 hover:text-white transition-all transform hover:-translate-y-1 shadow-lg">
+              <i class="fab fa-linkedin-in" aria-hidden="true"></i>
             </a>
-            <a href="https://www.instagram.com/egidanuarta17/" target="_blank" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-green-500 hover:text-white transition-all transform hover:-translate-y-1 shadow-lg">
-              <i class="fab fa-instagram"></i>
+            <a href="https://www.instagram.com/egidanuarta17/" target="_blank" aria-label="Instagram" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:bg-green-500 hover:text-white transition-all transform hover:-translate-y-1 shadow-lg">
+              <i class="fab fa-instagram" aria-hidden="true"></i>
             </a>
           </div>
         </div>
