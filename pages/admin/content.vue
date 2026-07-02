@@ -111,6 +111,7 @@ definePageMeta({
 })
 
 const supabase = useSupabaseClient()
+const { saveSettings, getSettings } = useSiteSettings()
 const aboutMe = ref(["Loading..."])
 const cvLink = ref("")
 const selectedFile = ref(null)
@@ -120,6 +121,14 @@ const messages = ref({ about_me: '', cv_link: '', cv_error: false })
 
 // Load content from Supabase
 onMounted(async () => {
+  // Load CV URL from site_settings (source of truth for homepage)
+  try {
+    const settings = await getSettings(['cv_url'])
+    if (settings.cv_url) cvLink.value = settings.cv_url
+  } catch (e) {
+    // fallback to portfolio_content
+  }
+
   const { data, error } = await supabase.from('portfolio_content').select('*')
   if (data) {
     const aboutData = data.find(item => item.section_name === 'about_me')
@@ -131,12 +140,15 @@ onMounted(async () => {
       ]
     }
 
-    const cvData = data.find(item => item.section_name === 'cv_link')
-    if (cvData && cvData.content) {
-      try {
-        cvLink.value = JSON.parse(cvData.content)
-      } catch (e) {
-        cvLink.value = cvData.content
+    // Only use portfolio_content CV if site_settings didn't have one
+    if (!cvLink.value) {
+      const cvData = data.find(item => item.section_name === 'cv_link')
+      if (cvData && cvData.content) {
+        try {
+          cvLink.value = JSON.parse(cvData.content)
+        } catch (e) {
+          cvLink.value = cvData.content
+        }
       }
     }
   }
@@ -160,6 +172,11 @@ const saveContent = async (section) => {
       await supabase.from('portfolio_content').update({ content: contentToSave }).eq('id', existing.id)
     } else {
       await supabase.from('portfolio_content').insert({ section_name: section, content: contentToSave })
+    }
+
+    // Sync CV URL to site_settings so homepage picks it up
+    if (section === 'cv_link' && cvLink.value) {
+      await saveSettings({ cv_url: cvLink.value })
     }
     
     messages.value[section] = 'Changes saved successfully!'

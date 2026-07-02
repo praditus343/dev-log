@@ -1,69 +1,84 @@
 <template>
   <div>
     <Navbar />
-    <section class="projects">
-      <div class="container">
-        <h2 class="text-center mb-5" data-aos="fade-down">My Projects</h2>
+    <section class="bg-slate-900 text-white min-h-screen py-20 text-center">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-4xl font-bold text-slate-300 mb-4 relative inline-block" data-aos="fade-down">
+          My Projects
+          <span class="absolute left-1/2 -translate-x-1/2 -bottom-2.5 w-[60px] h-[3px] bg-green-500"></span>
+        </h2>
 
-        <div v-if="pending" class="text-center py-5">
-          <div class="spinner-border text-success" role="status">
+        <!-- Loading -->
+        <div v-if="pending" class="text-center py-12">
+          <div class="inline-block w-10 h-10 border-4 border-green-500/30 border-t-green-500 rounded-full animate-spin" role="status">
             <span class="sr-only">Loading...</span>
           </div>
-          <p class="mt-3 text-muted">Loading projects...</p>
+          <p class="mt-4 text-slate-400">Loading projects...</p>
         </div>
 
-        <div v-else-if="error" class="text-center py-5 text-danger">
-          <i class="fas fa-exclamation-triangle fa-2x mb-3"></i>
+        <!-- Error -->
+        <div v-else-if="error" class="text-center py-12 text-red-400">
+          <i class="fas fa-exclamation-triangle text-3xl mb-3"></i>
           <p>Failed to load projects. Please try again later.</p>
         </div>
 
         <template v-else>
           <!-- Filter Buttons -->
-          <div class="filter-buttons mb-4" data-aos="fade-up">
-            <button 
-              v-for="category in categories" 
+          <div class="flex justify-center gap-4 flex-wrap mb-8 mt-10" data-aos="fade-up">
+            <button
+              v-for="category in categories"
               :key="category"
               @click="currentCategory = category"
-              :class="['filter-btn', { active: currentCategory === category }]"
+              :class="[
+                'px-5 py-2 rounded-full border-2 border-green-500 text-slate-300 font-medium cursor-pointer transition-all duration-300 text-sm',
+                currentCategory === category
+                  ? 'bg-green-500 text-white'
+                  : 'hover:bg-green-500 hover:text-white'
+              ]"
             >
               {{ category }}
             </button>
           </div>
 
-          <div v-if="filteredProjects && filteredProjects.length === 0" class="text-center py-5 text-muted">
+          <!-- Empty state -->
+          <div v-if="filteredProjects && filteredProjects.length === 0" class="text-center py-12 text-slate-400">
             No projects found in this category.
           </div>
 
-          <div v-else class="row">
-            <div 
-              v-for="project in filteredProjects" 
-              :key="project.id" 
-              class="col-md-4 mb-4"
+          <!-- Project Grid -->
+          <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div
+              v-for="project in filteredProjects"
+              :key="project.id"
               data-aos="fade-up"
             >
-              <div class="card project-card">
-                <div class="project-image-container">
-                  <img v-if="project.image_url" :src="project.image_url" class="card-img-top" :alt="project.title">
-                  <div v-else class="card-img-placeholder"><i class="fas fa-image"></i></div>
-                  <div class="project-overlay">
-                    <div class="project-tech">
-                      <span v-for="tech in project.technologies" :key="tech" class="tech-badge">
+              <div class="project-card bg-slate-800 rounded-card overflow-hidden h-full border-0 transition-all duration-300 hover:-translate-y-2.5 hover:shadow-[0_10px_20px_rgba(0,0,0,0.4)]">
+                <!-- Image -->
+                <div class="relative overflow-hidden">
+                  <img v-if="project.image_url" :src="project.image_url" class="w-full h-[200px] object-cover transition-transform duration-300 project-card-img" :alt="project.title" loading="lazy">
+                  <div v-else class="h-[200px] flex items-center justify-center bg-slate-900 text-slate-700 text-5xl"><i class="fas fa-image"></i></div>
+                  <div class="project-overlay absolute inset-0 bg-green-500/90 flex items-center justify-center opacity-0 transition-opacity duration-300">
+                    <div class="p-4 text-center">
+                      <span v-for="tech in project.technologies" :key="tech" class="inline-block bg-white/90 text-slate-800 px-2.5 py-1 rounded-badge text-xs m-1 font-medium">
                         {{ tech }}
                       </span>
                     </div>
                   </div>
                 </div>
-                <div class="card-body">
-                  <h5 class="card-title truncate">{{ project.title }}</h5>
-                  <p class="card-text line-clamp-3">
+                <!-- Body -->
+                <div class="p-5 text-slate-300 text-left">
+                  <h5 class="text-xl font-semibold mb-4 text-white truncate">{{ project.title }}</h5>
+                  <p class="text-sm leading-relaxed mb-5 line-clamp-3 text-slate-400">
                     {{ project.description }}
                   </p>
-                  <div class="project-links d-flex justify-content-between">
-                    <a v-if="project.live_link" :href="project.live_link" class="btn btn-primary" target="_blank">
+                  <div class="flex gap-3 flex-col sm:flex-row">
+                    <a v-if="project.live_link" :href="project.live_link" class="inline-flex items-center justify-center bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-btn text-sm font-medium transition-all duration-300 hover:-translate-y-0.5" target="_blank">
                       <i class="fas fa-external-link-alt mr-2"></i>View Project
                     </a>
-                    <span v-else class="btn btn-primary disabled">No Live Link</span>
-                    <button class="btn btn-outline-light" @click="showDetails(project)">
+                    <span v-else class="inline-flex items-center justify-center bg-green-500/50 text-white/60 px-4 py-2 rounded-btn text-sm cursor-not-allowed">
+                      No Live Link
+                    </span>
+                    <button class="inline-flex items-center justify-center border-2 border-slate-300 text-slate-300 hover:bg-slate-300 hover:text-slate-800 px-4 py-2 rounded-btn text-sm font-medium transition-all duration-300 hover:-translate-y-0.5" @click="showDetails(project)">
                       <i class="fas fa-info-circle mr-2"></i>Details
                     </button>
                   </div>
@@ -77,60 +92,57 @@
     <Footer />
 
     <!-- Modal -->
-    <div v-if="selectedProject" class="modal fade show" tabindex="-1" style="display: block;" :style="{ background: 'rgba(0,0,0,0.8)' }">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">{{ selectedProject.title }}</h5>
-            <button type="button" class="close" @click="closeModal">&times;</button>
+    <Teleport to="body">
+      <div v-if="selectedProject" class="fixed inset-0 z-[999] flex items-center justify-center p-4 bg-black/80" @click.self="closeModal">
+        <div class="bg-slate-800 text-white rounded-card w-full max-w-3xl max-h-[90vh] flex flex-col shadow-2xl">
+          <!-- Header -->
+          <div class="flex items-center justify-between border-b border-slate-700 p-5">
+            <h5 class="text-xl font-semibold text-slate-300">{{ selectedProject.title }}</h5>
+            <button type="button" class="text-slate-300 hover:text-white text-3xl leading-none" @click="closeModal">&times;</button>
           </div>
-          <div class="modal-body modal-scrollable">
-            <div class="project-gallery mb-4">
-              <img v-if="selectedProject.image_url" :src="selectedProject.image_url" class="img-fluid" :alt="selectedProject.title">
-              <div v-else class="card-img-placeholder"><i class="fas fa-image fa-3x"></i></div>
+          <!-- Body -->
+          <div class="overflow-y-auto p-6 flex-1">
+            <div class="rounded-xl overflow-hidden mb-6">
+              <img v-if="selectedProject.image_url" :src="selectedProject.image_url" class="w-full rounded-xl" :alt="selectedProject.title" loading="lazy">
+              <div v-else class="h-48 flex items-center justify-center bg-slate-900 text-slate-700 text-5xl rounded-xl"><i class="fas fa-image"></i></div>
             </div>
-            <div class="project-details">
+            <div>
               <div v-if="selectedProject.technologies && selectedProject.technologies.length">
-                <h6 class="details-title">Technologies Used:</h6>
-                <div class="tech-stack mb-3">
-                  <span v-for="tech in selectedProject.technologies" :key="tech" class="tech-badge">
+                <h6 class="text-green-500 text-lg font-semibold mb-2 mt-4">Technologies Used:</h6>
+                <div class="mb-5">
+                  <span v-for="tech in selectedProject.technologies" :key="tech" class="inline-block bg-white/90 text-slate-800 px-2.5 py-1 rounded-badge text-xs m-1 font-medium">
                     {{ tech }}
                   </span>
                 </div>
               </div>
-              <h6 class="details-title">Project Description:</h6>
-              <p class="project-description">{{ selectedProject.description }}</p>
+              <h6 class="text-green-500 text-lg font-semibold mb-2 mt-4">Project Description:</h6>
+              <p class="text-slate-300 leading-relaxed">{{ selectedProject.description }}</p>
               <div v-if="selectedProject.features && selectedProject.features.length">
-                <h6 class="details-title">Key Features:</h6>
-                <ul class="feature-list">
-                  <li v-for="feature in selectedProject.features" :key="feature">{{ feature }}</li>
+                <h6 class="text-green-500 text-lg font-semibold mb-2 mt-4">Key Features:</h6>
+                <ul class="list-none pl-0 space-y-2">
+                  <li v-for="feature in selectedProject.features" :key="feature" class="relative pl-6 text-slate-300 before:content-['→'] before:absolute before:left-0 before:text-green-500">{{ feature }}</li>
                 </ul>
               </div>
             </div>
           </div>
-          <div class="modal-footer">
-            <a v-if="selectedProject.github_link" :href="selectedProject.github_link" class="btn btn-dark" target="_blank">
+          <!-- Footer -->
+          <div class="border-t border-slate-700 p-5 flex flex-wrap gap-3 justify-end">
+            <a v-if="selectedProject.github_link" :href="selectedProject.github_link" class="inline-flex items-center bg-slate-900 hover:bg-slate-700 text-white px-4 py-2 rounded-btn text-sm font-medium transition-all duration-300" target="_blank">
               <i class="fab fa-github mr-2"></i>GitHub
             </a>
-            <a v-if="selectedProject.live_link" :href="selectedProject.live_link" class="btn btn-primary" target="_blank">
+            <a v-if="selectedProject.live_link" :href="selectedProject.live_link" class="inline-flex items-center bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-btn text-sm font-medium transition-all duration-300 hover:-translate-y-0.5" target="_blank">
               <i class="fas fa-external-link-alt mr-2"></i>Visit Project
             </a>
-            <button type="button" class="btn btn-secondary" @click="closeModal">Close</button>
+            <button type="button" class="inline-flex items-center bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-btn text-sm font-medium transition-all duration-300" @click="closeModal">Close</button>
           </div>
         </div>
       </div>
-    </div>
+    </Teleport>
   </div>
 </template>
 
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
-
-useHead({
-  link: [
-    { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css' }
-  ]
-})
 
 const supabase = useSupabaseClient()
 
@@ -146,7 +158,7 @@ const { data: projects, pending, error } = await useAsyncData('public-projects',
     
   if (error) throw error
   return data || []
-})
+}, { lazy: true })
 
 const categories = computed(() => {
   if (!projects.value) return ['All']
@@ -183,268 +195,10 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped>
-.projects {
-  padding: 80px 0;
-  background: #0f172a;
-  color: #fff;
-  min-height: 100vh;
-  text-align: center;
-}
-
-.projects h2 {
-  color: #cbd5e1;
-  font-size: 2.5rem;
-  font-weight: 700;
-  margin-bottom: 40px;
-  position: relative;
-  display: inline-block;
-}
-
-.projects h2::after {
-  content: '';
-  position: absolute;
-  bottom: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 60px;
-  height: 3px;
-  background: #01c879;
-}
-
-.filter-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  flex-wrap: wrap;
-  margin-bottom: 30px;
-}
-
-.filter-btn {
-  background: transparent;
-  border: 2px solid #01c879;
-  color: #cbd5e1;
-  padding: 8px 20px;
-  border-radius: 25px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.filter-btn:hover, .filter-btn.active {
-  background: #01c879;
-  color: #fff;
-}
-
-.project-card {
-  background: #1e293b;
-  border-radius: 15px;
-  overflow: hidden;
-  transition: transform 0.3s, box-shadow 0.3s;
-  height: 100%;
-  border: none;
-}
-
-.project-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
-}
-
-.project-image-container {
-  position: relative;
-  overflow: hidden;
-}
-
-.project-card .card-img-top {
-  height: 200px;
-  object-fit: cover;
-  transition: transform 0.3s ease;
-}
-
-.card-img-placeholder {
-  height: 200px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #0f172a;
-  color: #334155;
-  font-size: 3rem;
-}
-
-.project-card:hover .card-img-top {
+.project-card:hover .project-card-img {
   transform: scale(1.1);
 }
-
-.project-overlay {
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(1, 200, 121, 0.9);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
 .project-card:hover .project-overlay {
   opacity: 1;
-}
-
-.project-tech {
-  padding: 15px;
-  text-align: center;
-}
-
-.tech-badge {
-  display: inline-block;
-  background: rgba(255, 255, 255, 0.9);
-  color: #1e293b;
-  padding: 5px 10px;
-  border-radius: 15px;
-  font-size: 0.8rem;
-  margin: 3px;
-  font-weight: 500;
-}
-
-.project-card .card-body {
-  padding: 20px;
-  color: #cbd5e1;
-  text-align: left;
-}
-
-.project-card .card-title {
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin-bottom: 15px;
-  color: #fff;
-}
-
-.project-card .card-text {
-  font-size: 0.9rem;
-  line-height: 1.6;
-  margin-bottom: 20px;
-}
-
-.project-links { display: flex; gap: 10px; }
-
-.btn-primary {
-  background-color: #01c879;
-  border-color: #01c879;
-  padding: 8px 15px;
-  border-radius: 20px;
-  font-size: 0.9rem;
-  transition: all 0.3s ease;
-}
-
-.btn-primary:hover {
-  background-color: #019d6b;
-  border-color: #019d6b;
-  transform: translateY(-2px);
-}
-
-.btn-outline-light {
-  color: #cbd5e1;
-  border-color: #cbd5e1;
-  padding: 8px 15px;
-  border-radius: 20px;
-  font-size: 0.9rem;
-  transition: all 0.3s ease;
-}
-
-.btn-outline-light:hover {
-  background-color: #cbd5e1;
-  color: #1e293b;
-  transform: translateY(-2px);
-}
-
-.modal-content {
-  background: #1e293b;
-  color: #fff;
-  border-radius: 15px;
-}
-
-.modal-header { border-bottom: 1px solid #2d3748; padding: 20px; }
-
-.modal-title {
-  color: #cbd5e1;
-  font-size: 1.5rem;
-  font-weight: 600;
-}
-
-.close { color: #cbd5e1; opacity: 1; font-size: 1.75rem; }
-.close:hover { color: #fff; }
-
-.modal-body { padding: 25px; }
-
-.modal-scrollable {
-  max-height: 70vh;
-  overflow-y: auto;
-}
-
-.project-gallery {
-  border-radius: 10px;
-  overflow: hidden;
-  margin-bottom: 25px;
-}
-
-.project-gallery img {
-  width: 100%;
-  border-radius: 10px;
-}
-
-.details-title {
-  color: #01c879;
-  font-size: 1.1rem;
-  margin-bottom: 10px;
-  font-weight: 600;
-  margin-top: 15px;
-}
-
-.tech-stack { margin-bottom: 20px; }
-
-.feature-list {
-  list-style-type: none;
-  padding-left: 0;
-}
-
-.feature-list li {
-  position: relative;
-  padding-left: 25px;
-  margin-bottom: 10px;
-  color: #cbd5e1;
-}
-
-.feature-list li::before {
-  content: '→';
-  position: absolute;
-  left: 0;
-  color: #01c879;
-}
-
-.modal-footer { border-top: 1px solid #2d3748; padding: 20px; }
-
-.btn-secondary {
-  background-color: #4b5563;
-  border-color: #4b5563;
-  transition: all 0.3s ease;
-}
-
-.btn-secondary:hover {
-  background-color: #374151;
-  border-color: #374151;
-}
-
-.btn-dark {
-  border-radius: 20px;
-  font-size: 0.9rem;
-  transition: all 0.3s ease;
-}
-
-@media (max-width: 768px) {
-  .projects { padding: 50px 0; }
-  .projects h2 { font-size: 2rem; }
-  .filter-buttons { gap: 10px; }
-  .filter-btn { padding: 6px 15px; font-size: 0.9rem; }
-  .project-card .card-img-top { height: 180px; }
-  .project-links { flex-direction: column; }
-  .modal-dialog { margin: 10px; }
 }
 </style>
